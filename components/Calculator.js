@@ -18,7 +18,7 @@ export default function Calculator() {
 
   return (
     <div className="main-container">
-      {/* ส่วนกรอกข้อมูล */}
+      {/* ฝั่งกรอกข้อมูล */}
       <div className="input-section">
         <h2 className="section-title">
           ตั้งค่าการคำนวณ <br/>(เผื่อพื้นที่ 10%)
@@ -53,93 +53,104 @@ export default function Calculator() {
         </div>
       </div>
 
-      {/* ส่วนแสดงผล */}
+      {/* ฝั่งแสดงผล (ปรับปรุงให้ไม่ขาด) */}
       <div className="result-section">
-        <p className="label-top">TOTAL CAPACITY</p>
-        <div className="result-number">{result}</div>
-        <p className="unit">Terabytes (TB)</p>
-        
-        <div className="divider"></div>
-        
-        <div className="recommendation-box">
-          <p>ขนาด HDD ที่แนะนำให้ซื้อ</p>
-          <div className="hdd-size">{Math.ceil(result)} TB</div>
-        </div>
+        <div className="result-content">
+          <p className="label-top">TOTAL CAPACITY</p>
+          <div className="result-number">{result}</div>
+          <p className="unit">Terabytes (TB)</p>
+          
+          <div className="divider"></div>
+          
+          <div className="recommendation-box">
+            <p className="rec-label">ขนาด HDD ที่แนะนำให้ซื้อ</p>
+            <div className="hdd-size">{Math.ceil(result)} TB</div>
+          </div>
 
-        <a href="https://lin.ee/MbzD6Wr" target="_blank" rel="noopener noreferrer" className="line-btn">
-          ติดต่อสอบถาม
-        </a>
+          <a href="https://lin.ee/MbzD6Wr" target="_blank" rel="noopener noreferrer" className="line-btn">
+            ติดต่อสอบถาม
+          </a>
+        </div>
       </div>
 
       <style jsx>{`
         .main-container {
           max-width: 1000px;
+          width: 95%;
           margin: 20px auto;
           background-color: #ffffff;
-          border-radius: 20px;
+          border-radius: 24px;
           overflow: hidden;
           display: flex;
-          flex-direction: column; /* มือถือ: บนลงล่าง */
+          flex-direction: column;
           border: 1px solid #e2e8f0;
-          box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
         }
 
         @media (min-width: 768px) {
           .main-container {
-            flex-direction: row; /* คอมพิวเตอร์: ซ้ายไปขวา */
+            flex-direction: row;
             margin: 40px auto;
           }
         }
 
         .input-section {
           flex: 1;
-          padding: 30px;
+          padding: 40px 30px;
           color: #1e293b;
         }
 
         .section-title {
-          font-size: 22px;
+          font-size: 24px;
           font-weight: 900;
           border-left: 8px solid #003366;
           padding-left: 15px;
-          margin-bottom: 25px;
-          line-height: 1.2;
+          margin-bottom: 30px;
+          color: #003366;
         }
 
         .form-group {
-          margin-bottom: 18px;
+          margin-bottom: 20px;
         }
 
         .form-group label {
           display: block;
-          font-weight: bold;
-          margin-bottom: 6px;
+          font-weight: 800;
+          margin-bottom: 8px;
           font-size: 14px;
+          color: #475569;
         }
 
         .form-group input, .form-group select {
           width: 100%;
-          padding: 12px;
-          border-radius: 10px;
-          border: 2px solid #cbd5e1;
-          font-size: 16px;
+          padding: 14px;
+          border-radius: 12px;
+          border: 2px solid #e2e8f0;
+          font-size: 18px;
           font-weight: bold;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+          border-color: #003366;
         }
 
         .btn-group {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 10px;
+          gap: 12px;
         }
 
         .btn-group button {
-          padding: 12px;
-          border-radius: 10px;
+          padding: 14px;
+          border-radius: 12px;
           border: none;
-          font-weight: bold;
+          font-weight: 800;
           cursor: pointer;
           background-color: #f1f5f9;
           color: #64748b;
+          transition: all 0.2s;
         }
 
         .btn-group button.active {
@@ -150,71 +161,92 @@ export default function Calculator() {
         .result-section {
           width: 100%;
           background-color: #003366;
-          padding: 40px 20px;
+          color: #ffffff;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          text-align: center;
-          color: #ffffff;
+          justify-content: center;
+          padding: 50px 30px; /* เพิ่มพื้นที่ว่างด้านบนและล่าง */
         }
 
         @media (min-width: 768px) {
           .result-section {
-            width: 400px;
+            width: 420px;
           }
         }
 
+        .result-content {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
         .label-top {
-          font-size: 12px;
-          font-weight: bold;
-          letter-spacing: 2px;
-          opacity: 0.8;
-          margin-bottom: 15px;
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: 3px;
+          opacity: 0.7;
+          margin-bottom: 10px;
         }
 
         .result-number {
-          font-size: clamp(60px, 15vw, 100px); /* ย่อขนาดตามจอ */
+          font-size: clamp(80px, 20vw, 110px);
           font-weight: 900;
-          line-height: 1;
+          line-height: 0.9;
+          margin-bottom: 10px;
         }
 
         .unit {
-          font-size: 20px;
-          font-weight: bold;
-          margin: 10px 0 30px 0;
+          font-size: 22px;
+          font-weight: 700;
+          margin-bottom: 30px;
+          opacity: 0.9;
         }
 
         .divider {
-          width: 100%;
-          height: 2px;
-          background-color: rgba(255,255,255,0.1);
+          width: 80%;
+          height: 1px;
+          background-color: rgba(255,255,255,0.2);
           margin-bottom: 30px;
         }
 
         .recommendation-box {
           background-color: rgba(255,255,255,0.1);
-          padding: 20px;
-          border-radius: 20px;
+          padding: 25px;
+          border-radius: 24px;
           width: 100%;
-          margin-bottom: 25px;
+          margin-bottom: 35px;
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .rec-label {
+          font-size: 15px;
+          font-weight: 600;
+          opacity: 0.8;
+          margin-bottom: 5px;
         }
 
         .hdd-size {
-          font-size: 36px;
+          font-size: 45px;
           font-weight: 900;
-          margin-top: 5px;
         }
 
         .line-btn {
           width: 100%;
-          padding: 18px;
-          border-radius: 15px;
+          padding: 20px;
+          border-radius: 16px;
           background-color: #ffffff;
           color: #003366;
           font-weight: 900;
-          font-size: 18px;
+          font-size: 20px;
           text-decoration: none;
-          box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+          box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+          transition: transform 0.2s;
+        }
+
+        .line-btn:active {
+          transform: scale(0.98);
         }
       `}</style>
     </div>
