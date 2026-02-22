@@ -1,0 +1,26 @@
+import './globals.css'; // สำคัญมาก: เพื่อให้ Tailwind CSS แสดงผล
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata = {
+  title: 'CCTV Storage Calculator - คำนวณพื้นที่กล้องวงจรปิด | AITS Expert',
+  description: 'โปรแกรมคำนวณพื้นที่จัดเก็บข้อมูลกล้องวงจรปิด (HDD Storage) มาตรฐาน H.264/H.265 แม่นยำสำหรับช่างติดตั้งและผู้ใช้งานทั่วไป โดย Pongphit (Ae)',
+  keywords: ['คำนวณ CCTV', 'CCTV Storage Calculator', 'คำนวณฮาร์ดดิสก์กล้องวงจรปิด', 'กล้องวงจรปิดใช้ HDD กี่ TB'],
+  authors: [{ name: 'Pongphit (Ae)' }],
+  viewport: 'width=device-width, initial-scale=1',
+  robots: 'index, follow',
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="th">
+      <head>
+        {/* คุณสามารถเพิ่ม Google Analytics หรือ Script อื่นๆ ของ SEO ได้ที่นี่ */}
+      </head>
+      <body className={`${inter.className} antialiased`}>
+        {children}
+      </body>
+    </html>
+  );
+}

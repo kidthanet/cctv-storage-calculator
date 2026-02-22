@@ -1,0 +1,37 @@
+import Calculator from '../components/Calculator';
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-6 md:p-12">
+      
+      {/* ส่วนหัวข้อ: ปรับเป็นตัวหนังสือสีดำบนพื้นหลังสว่าง เพื่อความชัดเจนสูงสุด */}
+      <div className="w-full max-w-5xl mb-10 text-center">
+        <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter uppercase">
+          CCTV Storage Calculator
+        </h1>
+        <div className="mt-4 flex flex-col items-center">
+          <div className="h-1.5 w-20 bg-[#003366] rounded-full mb-4"></div>
+          <p className="text-slate-600 text-lg font-bold">
+            ประเมินพื้นที่จัดเก็บข้อมูล (มาตรฐาน H.265 เผื่อพื้นที่ 10%)
+          </p>
+        </div>
+      </div>
+
+      {/* เรียกใช้งาน Component Calculator */}
+      <div className="w-full flex justify-center">
+        <Calculator />
+      </div>
+
+      {/* Footer ส่วนท้ายแบบเรียบง่าย */}
+      <footer className="mt-16 text-center">
+        <p className="text-slate-400 text-sm font-bold uppercase tracking-[0.2em]">
+          © 2026 AITS CCTV Storage Tool
+        </p>
+        <p className="text-slate-500 font-bold mt-1">
+          Powered by Pongphit (Ae)
+        </p>
+      </footer>
+
+    </main>
+  );
+}

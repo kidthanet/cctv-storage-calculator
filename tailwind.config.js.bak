@@ -1,0 +1,18 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}", // เผื่อไว้กรณีมีการใช้โฟลเดอร์ pages ในอนาคต
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // เพิ่มสีเฉพาะสำหรับธีม AITS เพื่อให้เรียกใช้ง่ายขึ้น
+        'aits-navy': '#003366',
+        'aits-blue': '#0055aa',
+      },
+    },
+  },
+  plugins: [],
+}

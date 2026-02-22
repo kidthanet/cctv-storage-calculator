@@ -1,0 +1,100 @@
+"use client";
+import { useState, useEffect } from 'react';
+
+export default function Calculator() {
+  const [cameras, setCameras] = useState(4);
+  const [days, setDays] = useState(30);
+  const [resolution, setResolution] = useState(2048);
+  const [compression, setCompression] = useState(1); // 1 = H.265, 2 = H.264
+  const [result, setResult] = useState(0);
+
+  useEffect(() => {
+    // สูตรคำนวณมาตรฐาน
+    const bitrateInBps = resolution * 1024; 
+    const totalBytes = (bitrateInBps * 3600 * 24 * days * cameras * compression) / 8;
+    const totalTB = totalBytes / Math.pow(1024, 4);
+    
+    // เผื่อพื้นที่เพิ่มอีก 10% (Safety Margin) ตามที่คุณพงษ์พิศต้องการ
+    const finalResult = totalTB * 1.1;
+    
+    setResult(finalResult.toFixed(2));
+  }, [cameras, days, resolution, compression]);
+
+  return (
+    <div style={{ maxWidth: '1000px', margin: '40px auto', backgroundColor: '#ffffff', borderRadius: '20px', overflow: 'hidden', display: 'flex', flexDirection: 'row', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)' }}>
+      
+      {/* ส่วนกรอกข้อมูล (ฝั่งซ้าย - พื้นขาวตัวอักษรเข้ม) */}
+      <div style={{ flex: '1', padding: '40px', color: '#1e293b' }}>
+        <h2 style={{ fontSize: '24px', fontWeight: '900', borderLeft: '8px solid #003366', paddingLeft: '15px', marginBottom: '30px' }}>
+          ตั้งค่าการคำนวณ (เผื่อพื้นที่ 10%)
+        </h2>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px' }}>จำนวนกล้อง (ตัว)</label>
+            <input type="number" value={cameras} onChange={(e) => setCameras(Number(e.target.value))} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '2px solid #cbd5e1', fontSize: '18px', fontWeight: 'bold' }} />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px' }}>ความละเอียดภาพ</label>
+            <select value={resolution} onChange={(e) => setResolution(Number(e.target.value))} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '2px solid #cbd5e1', fontSize: '18px', fontWeight: 'bold' }}>
+              <option value={1024}>1MP (720P)</option>
+              <option value={2048}>2MP (1080P)</option>
+              <option value={4096}>4MP (2K)</option>
+              <option value={8192}>8MP (4K)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px' }}>เทคโนโลยีการบีบอัด</label>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <button onClick={() => setCompression(1)} style={{ padding: '15px', borderRadius: '10px', border: 'none', fontWeight: 'bold', cursor: 'pointer', backgroundColor: compression === 1 ? '#003366' : '#f1f5f9', color: compression === 1 ? '#fff' : '#64748b' }}>H.265</button>
+              <button onClick={() => setCompression(2)} style={{ padding: '15px', borderRadius: '10px', border: 'none', fontWeight: 'bold', cursor: 'pointer', backgroundColor: compression === 2 ? '#003366' : '#f1f5f9', color: compression === 2 ? '#fff' : '#64748b' }}>H.264</button>
+            </div>
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px' }}>ระยะเวลาจัดเก็บ (วัน)</label>
+            <input type="number" value={days} onChange={(e) => setDays(Number(e.target.value))} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '2px solid #cbd5e1', fontSize: '18px', fontWeight: 'bold' }} />
+          </div>
+        </div>
+      </div>
+
+      {/* ส่วนแสดงผล (ฝั่งขวา - พื้นน้ำเงินเรียบ ข้อความขาวบริสุทธิ์) */}
+      <div style={{ width: '400px', backgroundColor: '#003366', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', color: '#ffffff' }}>
+        <p style={{ fontSize: '14px', fontWeight: 'bold', letterSpacing: '2px', opacity: '0.8', margin: '0 0 20px 0' }}>TOTAL CAPACITY</p>
+        
+        <div style={{ fontSize: '100px', fontWeight: '900', lineHeight: '1', marginBottom: '10px', color: '#ffffff' }}>{result}</div>
+        <p style={{ fontSize: '24px', fontWeight: 'bold', margin: '0 0 40px 0', color: '#ffffff' }}>Terabytes (TB)</p>
+        
+        <div style={{ width: '100%', height: '2px', backgroundColor: 'rgba(255,255,255,0.2)', marginBottom: '40px' }}></div>
+        
+        <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '25px', borderRadius: '20px', width: '100%', marginBottom: '30px' }}>
+          <p style={{ fontSize: '14px', marginBottom: '10px', opacity: '0.8', color: '#ffffff' }}>ขนาด HDD ที่แนะนำให้ซื้อ</p>
+          <p style={{ fontSize: '40px', fontWeight: '900', color: '#ffffff' }}>{Math.ceil(result)} TB</p>
+        </div>
+
+        {/* ปุ่มลิงก์ไป Line@ - สีขาวตัวหนังสือดำ/น้ำเงิน ชัดเจนที่สุด */}
+        <a 
+          href="https://lin.ee/MbzD6Wr" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ 
+            width: '100%', 
+            padding: '20px', 
+            borderRadius: '15px', 
+            backgroundColor: '#ffffff', 
+            color: '#003366', 
+            fontWeight: '900', 
+            fontSize: '18px', 
+            textDecoration: 'none',
+            display: 'block',
+            boxShadow: '0 10px 15px -3px rgba(0,0,0,0.3)',
+            textAlign: 'center'
+          }}
+        >
+          ติดต่อสอบถาม      </a>
+      </div>
+    </div>
+  );
+}
