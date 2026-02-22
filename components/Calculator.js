@@ -18,11 +18,10 @@ export default function Calculator() {
 
   return (
     <div className="main-container">
-      {/* ฝั่งกรอกข้อมูล */}
+      {/* ฝั่งซ้าย: ข้อมูลนำเข้า */}
       <div className="input-section">
-        <h2 className="section-title">
-          ตั้งค่าการคำนวณ <br/>(เผื่อพื้นที่ 10%)
-        </h2>
+        <h2 className="section-title">ตั้งค่าการคำนวณ</h2>
+        <p className="subtitle">มาตรฐาน H.265 เผื่อพื้นที่ 10%</p>
 
         <div className="form-group">
           <label>จำนวนกล้อง (ตัว)</label>
@@ -40,7 +39,7 @@ export default function Calculator() {
         </div>
 
         <div className="form-group">
-          <label>เทคโนโลยีการบีบอัด</label>
+          <label>การบีบอัดข้อมูล</label>
           <div className="btn-group">
             <button onClick={() => setCompression(1)} className={compression === 1 ? 'active' : ''}>H.265</button>
             <button onClick={() => setCompression(2)} className={compression === 2 ? 'active' : ''}>H.264</button>
@@ -48,27 +47,28 @@ export default function Calculator() {
         </div>
 
         <div className="form-group">
-          <label>ระยะเวลาจัดเก็บ (วัน)</label>
+          <label>ระยะเวลาบันทึก (วัน)</label>
           <input type="number" value={days} onChange={(e) => setDays(Number(e.target.value))} />
         </div>
       </div>
 
-      {/* ฝั่งแสดงผล (ปรับปรุงให้ไม่ขาด) */}
+      {/* ฝั่งขวา: ผลลัพธ์ (ปรับปรุงให้ยืดเต็มพื้นที่) */}
       <div className="result-section">
-        <div className="result-content">
+        <div className="result-header">
           <p className="label-top">TOTAL CAPACITY</p>
           <div className="result-number">{result}</div>
           <p className="unit">Terabytes (TB)</p>
-          
+        </div>
+        
+        <div className="result-footer">
           <div className="divider"></div>
-          
           <div className="recommendation-box">
-            <p className="rec-label">ขนาด HDD ที่แนะนำให้ซื้อ</p>
+            <p className="rec-label">ขนาด HDD ที่แนะนำ</p>
             <div className="hdd-size">{Math.ceil(result)} TB</div>
           </div>
 
           <a href="https://lin.ee/MbzD6Wr" target="_blank" rel="noopener noreferrer" className="line-btn">
-            ติดต่อสอบถาม
+            ปรึกษาช่างเทคนิค
           </a>
         </div>
       </div>
@@ -76,37 +76,43 @@ export default function Calculator() {
       <style jsx>{`
         .main-container {
           max-width: 1000px;
-          width: 95%;
+          width: 92%;
           margin: 20px auto;
           background-color: #ffffff;
-          border-radius: 24px;
+          border-radius: 30px;
           overflow: hidden;
           display: flex;
           flex-direction: column;
+          min-height: 85vh; /* บังคับให้สูงเกือบเต็มจอเข็มไมล์บนมือถือ */
           border: 1px solid #e2e8f0;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
         }
 
         @media (min-width: 768px) {
           .main-container {
             flex-direction: row;
-            margin: 40px auto;
+            min-height: 600px;
           }
         }
 
         .input-section {
           flex: 1;
-          padding: 40px 30px;
-          color: #1e293b;
+          padding: 35px 25px;
+          background-color: #ffffff;
         }
 
         .section-title {
-          font-size: 24px;
+          font-size: 26px;
           font-weight: 900;
-          border-left: 8px solid #003366;
-          padding-left: 15px;
-          margin-bottom: 30px;
           color: #003366;
+          margin-bottom: 5px;
+        }
+
+        .subtitle {
+          color: #64748b;
+          font-weight: 600;
+          margin-bottom: 25px;
+          font-size: 14px;
         }
 
         .form-group {
@@ -118,22 +124,17 @@ export default function Calculator() {
           font-weight: 800;
           margin-bottom: 8px;
           font-size: 14px;
-          color: #475569;
+          color: #1e293b;
         }
 
         .form-group input, .form-group select {
           width: 100%;
-          padding: 14px;
-          border-radius: 12px;
-          border: 2px solid #e2e8f0;
+          padding: 15px;
+          border-radius: 15px;
+          border: 2px solid #f1f5f9;
+          background-color: #f8fafc;
           font-size: 18px;
           font-weight: bold;
-          outline: none;
-          transition: border-color 0.2s;
-        }
-
-        .form-group input:focus {
-          border-color: #003366;
         }
 
         .btn-group {
@@ -143,42 +144,38 @@ export default function Calculator() {
         }
 
         .btn-group button {
-          padding: 14px;
+          padding: 15px;
           border-radius: 12px;
           border: none;
           font-weight: 800;
-          cursor: pointer;
           background-color: #f1f5f9;
           color: #64748b;
-          transition: all 0.2s;
+          cursor: pointer;
         }
 
         .btn-group button.active {
           background-color: #003366;
-          color: #fff;
+          color: #ffffff;
         }
 
         .result-section {
-          width: 100%;
+          flex: 1; /* บังคับให้ขยายตัวเท่ากับฝั่งซ้าย */
           background-color: #003366;
           color: #ffffff;
+          padding: 50px 30px;
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          padding: 50px 30px; /* เพิ่มพื้นที่ว่างด้านบนและล่าง */
+          justify-content: space-between; /* ดันเนื้อหาบนลงล่างให้เต็มพื้นที่ */
+          align-items: center;
         }
 
         @media (min-width: 768px) {
           .result-section {
-            width: 420px;
+            max-width: 420px;
           }
         }
 
-        .result-content {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
+        .result-header {
           text-align: center;
         }
 
@@ -186,67 +183,66 @@ export default function Calculator() {
           font-size: 14px;
           font-weight: 800;
           letter-spacing: 3px;
-          opacity: 0.7;
-          margin-bottom: 10px;
+          opacity: 0.6;
         }
 
         .result-number {
-          font-size: clamp(80px, 20vw, 110px);
+          font-size: clamp(90px, 25vw, 120px);
           font-weight: 900;
-          line-height: 0.9;
-          margin-bottom: 10px;
+          line-height: 1;
         }
 
         .unit {
-          font-size: 22px;
+          font-size: 24px;
           font-weight: 700;
-          margin-bottom: 30px;
-          opacity: 0.9;
+          margin-top: 10px;
+        }
+
+        .result-footer {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
         .divider {
-          width: 80%;
+          width: 100%;
           height: 1px;
-          background-color: rgba(255,255,255,0.2);
+          background-color: rgba(255,255,255,0.15);
           margin-bottom: 30px;
         }
 
         .recommendation-box {
-          background-color: rgba(255,255,255,0.1);
+          background-color: rgba(255,255,255,0.08);
           padding: 25px;
-          border-radius: 24px;
+          border-radius: 25px;
           width: 100%;
-          margin-bottom: 35px;
-          border: 1px solid rgba(255,255,255,0.1);
+          margin-bottom: 30px;
+          text-align: center;
         }
 
         .rec-label {
-          font-size: 15px;
-          font-weight: 600;
+          font-size: 16px;
           opacity: 0.8;
           margin-bottom: 5px;
         }
 
         .hdd-size {
-          font-size: 45px;
+          font-size: 50px;
           font-weight: 900;
         }
 
         .line-btn {
           width: 100%;
-          padding: 20px;
-          border-radius: 16px;
+          padding: 22px;
+          border-radius: 20px;
           background-color: #ffffff;
           color: #003366;
           font-weight: 900;
           font-size: 20px;
           text-decoration: none;
-          box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
-          transition: transform 0.2s;
-        }
-
-        .line-btn:active {
-          transform: scale(0.98);
+          text-align: center;
+          box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
       `}</style>
     </div>
